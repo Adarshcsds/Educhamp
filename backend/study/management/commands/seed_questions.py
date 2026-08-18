@@ -1,5 +1,4 @@
 from django.core.management.base import BaseCommand
-
 from study.models import Question, QuestionSet
 
 
