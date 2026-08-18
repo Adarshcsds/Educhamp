@@ -10,21 +10,46 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('study', '0001_initial'),
+        ("study", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='QuestionAttempt',
+            name="QuestionAttempt",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('selected_answer', models.CharField(max_length=1)),
-                ('is_correct', models.BooleanField()),
-                ('time_taken', models.PositiveIntegerField(help_text='Time taken in seconds')),
-                ('attempted_at', models.DateTimeField(auto_now_add=True)),
-                ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='attempts', to='study.question')),
-                ('student', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='question_attempts', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("selected_answer", models.CharField(max_length=1)),
+                ("is_correct", models.BooleanField()),
+                (
+                    "time_taken",
+                    models.PositiveIntegerField(help_text="Time taken in seconds"),
+                ),
+                ("attempted_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "question",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="attempts",
+                        to="study.question",
+                    ),
+                ),
+                (
+                    "student",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="question_attempts",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

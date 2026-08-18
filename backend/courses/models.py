@@ -10,9 +10,7 @@ class Subject(models.Model):
 
 class Module(models.Model):
     subject = models.ForeignKey(
-        Subject,
-        on_delete=models.CASCADE,
-        related_name="modules"
+        Subject, on_delete=models.CASCADE, related_name="modules"
     )
     name = models.CharField(max_length=100)
 

@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from study.models import QuestionSet, Question
+
+from study.models import Question, QuestionSet
 
 
 class Command(BaseCommand):
@@ -58,7 +59,6 @@ class Command(BaseCommand):
                 "answer": "A",
                 "difficulty": "easy",
             },
-
             # Mathematics - Algebra
             {
                 "module": "algebra",
@@ -110,7 +110,6 @@ class Command(BaseCommand):
                 "answer": "C",
                 "difficulty": "medium",
             },
-
             # Science - EVS
             {
                 "module": "EVS",
@@ -162,7 +161,6 @@ class Command(BaseCommand):
                 "answer": "A",
                 "difficulty": "medium",
             },
-
             # Science - Physics
             {
                 "module": "phsyics",
@@ -214,7 +212,6 @@ class Command(BaseCommand):
                 "answer": "C",
                 "difficulty": "medium",
             },
-
             # English - Literature
             {
                 "module": "Literature",
@@ -266,7 +263,6 @@ class Command(BaseCommand):
                 "answer": "A",
                 "difficulty": "medium",
             },
-
             # English - Grammar
             {
                 "module": "Grammar",
@@ -318,7 +314,6 @@ class Command(BaseCommand):
                 "answer": "C",
                 "difficulty": "easy",
             },
-
             # Computer Science - Hardware
             {
                 "module": "Hardware",
@@ -370,7 +365,6 @@ class Command(BaseCommand):
                 "answer": "C",
                 "difficulty": "easy",
             },
-
             # Computer Science - Software
             {
                 "module": "Software",
@@ -428,8 +422,7 @@ class Command(BaseCommand):
             module = item["module"]
 
             question_set = QuestionSet.objects.get(
-                module__name__iexact=module,
-                set_number=1
+                module__name__iexact=module, set_number=1
             )
 
             Question.objects.get_or_create(
@@ -442,9 +435,7 @@ class Command(BaseCommand):
                     "option_d": item["d"],
                     "correct_answer": item["answer"],
                     "difficulty": item["difficulty"],
-                }
+                },
             )
 
-        self.stdout.write(
-            self.style.SUCCESS("Questions created successfully!")
-        )
+        self.stdout.write(self.style.SUCCESS("Questions created successfully!"))

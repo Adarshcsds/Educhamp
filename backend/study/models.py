@@ -3,14 +3,13 @@ from django.db import models
 
 class QuestionSet(models.Model):
     module = models.ForeignKey(
-        "courses.Module",
-        on_delete=models.CASCADE,
-        related_name="question_sets"
+        "courses.Module", on_delete=models.CASCADE, related_name="question_sets"
     )
     set_number = models.PositiveIntegerField()
 
     def __str__(self):
         return f"{self.module.name} - Set {self.set_number}"
+
 
 class Question(models.Model):
     DIFFICULTY_CHOICES = (
@@ -20,9 +19,7 @@ class Question(models.Model):
     )
 
     question_set = models.ForeignKey(
-        QuestionSet,
-        on_delete=models.CASCADE,
-        related_name="questions"
+        QuestionSet, on_delete=models.CASCADE, related_name="questions"
     )
 
     text = models.TextField()
@@ -34,12 +31,9 @@ class Question(models.Model):
 
     correct_answer = models.CharField(max_length=1)
 
-    difficulty = models.CharField(
-        max_length=10,
-        choices=DIFFICULTY_CHOICES
-    )
+    difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
 
     explanation = models.TextField(blank=True)
 
     def __str__(self):
-        return self.text[:50]    
+        return self.text[:50]

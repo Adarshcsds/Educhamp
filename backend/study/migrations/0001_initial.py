@@ -9,31 +9,71 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('courses', '0001_initial'),
+        ("courses", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='QuestionSet',
+            name="QuestionSet",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('set_number', models.PositiveIntegerField()),
-                ('module', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='question_sets', to='courses.module')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("set_number", models.PositiveIntegerField()),
+                (
+                    "module",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="question_sets",
+                        to="courses.module",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Question',
+            name="Question",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField()),
-                ('option_a', models.CharField(max_length=255)),
-                ('option_b', models.CharField(max_length=255)),
-                ('option_c', models.CharField(max_length=255)),
-                ('option_d', models.CharField(max_length=255)),
-                ('correct_answer', models.CharField(max_length=1)),
-                ('difficulty', models.CharField(choices=[('easy', 'Easy'), ('medium', 'Medium'), ('hard', 'Hard')], max_length=10)),
-                ('explanation', models.TextField(blank=True)),
-                ('question_set', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='study.questionset')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.TextField()),
+                ("option_a", models.CharField(max_length=255)),
+                ("option_b", models.CharField(max_length=255)),
+                ("option_c", models.CharField(max_length=255)),
+                ("option_d", models.CharField(max_length=255)),
+                ("correct_answer", models.CharField(max_length=1)),
+                (
+                    "difficulty",
+                    models.CharField(
+                        choices=[
+                            ("easy", "Easy"),
+                            ("medium", "Medium"),
+                            ("hard", "Hard"),
+                        ],
+                        max_length=10,
+                    ),
+                ),
+                ("explanation", models.TextField(blank=True)),
+                (
+                    "question_set",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="questions",
+                        to="study.questionset",
+                    ),
+                ),
             ],
         ),
     ]
