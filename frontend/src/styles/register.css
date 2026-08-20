@@ -1,0 +1,13 @@
+.register-page .login-layout {
+  width: min(100%, 460px);
+}
+
+.register-card {
+  padding-top: 24px;
+}
+
+@media (max-width: 560px) {
+  .register-page .login-layout {
+    width: 100%;
+  }
+}
