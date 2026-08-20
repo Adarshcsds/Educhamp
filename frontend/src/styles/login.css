@@ -1,0 +1,490 @@
+:root {
+  color: #172033;
+  background: #eef4fb;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+.login-page {
+  display: grid;
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  place-items: center;
+  padding: 24px;
+  background-image:
+    radial-gradient(circle at 16% 18%, rgba(147, 197, 253, 0.3), transparent 26%),
+    radial-gradient(circle at 84% 16%, rgba(96, 165, 250, 0.22), transparent 24%),
+    linear-gradient(rgba(239, 246, 255, 0.82), rgba(219, 234, 254, 0.8)),
+    url("../assets/login-bg-desktop.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-layout {
+  display: grid;
+  width: min(100%, 440px);
+  gap: 16px;
+  justify-items: center;
+}
+
+.brand-panel {
+  text-align: center;
+}
+
+.brand-panel h1 {
+  margin: 0 0 6px;
+  color: #1d4ed8;
+  font-size: 2.55rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.brand-panel p:last-child {
+  margin: 0;
+  max-width: 32rem;
+  color: #526f91;
+  font-size: 0.98rem;
+}
+
+.login-card {
+  width: 100%;
+  padding: 28px;
+  border: 1px solid rgba(219, 229, 240, 0.9);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 44px rgba(31, 51, 88, 0.15);
+  backdrop-filter: blur(12px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.app-mark {
+  display: inline-grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 8px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+  font-weight: 600;
+}
+
+.card-kicker {
+  margin: 0 0 2px;
+  color: #2563eb;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.card-header h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.user-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #dbe5f0;
+  border-radius: 8px;
+  background: #f4f7fb;
+}
+
+.user-tab {
+  min-height: 46px;
+  border: 0;
+  border-radius: 6px;
+  color: #526173;
+  background: transparent;
+  font-weight: 500;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.user-tab:hover {
+  color: #1d4ed8;
+}
+
+.user-tab.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
+}
+
+.login-form {
+  display: grid;
+  gap: 17px;
+}
+
+.field-group {
+  display: grid;
+  gap: 7px;
+}
+
+.field-group label {
+  color: #263f54;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.input-shell {
+  display: grid;
+  min-height: 54px;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border: 1px solid #cfd9e5;
+  border-radius: 8px;
+  background: #ffffff;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.input-shell:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.13);
+}
+
+.input-shell.has-error {
+  border-color: #d94a4a;
+  box-shadow: 0 0 0 4px rgba(217, 74, 74, 0.1);
+}
+
+.input-icon,
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+}
+
+.input-icon svg,
+.icon-button svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.input-icon {
+  color: #6b8294;
+}
+
+.input-shell input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: #102033;
+  background: transparent;
+}
+
+.input-shell input::placeholder {
+  color: #8a9dad;
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 8px;
+  color: #5c7285;
+  background: transparent;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.icon-button:hover {
+  color: #2563eb;
+  background: #eef4ff;
+}
+
+.eye-cutout {
+  fill: #ffffff;
+}
+
+.field-error {
+  margin: 0;
+  color: #b42318;
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.form-status {
+  margin: 0;
+  padding: 11px 13px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-status.success {
+  color: #0d6b51;
+  background: rgba(23, 178, 106, 0.12);
+}
+
+.form-status.error {
+  color: #b42318;
+  background: rgba(217, 74, 74, 0.12);
+}
+
+.form-status.info {
+  color: #1d4ed8;
+  background: rgba(96, 165, 250, 0.14);
+}
+
+.login-button {
+  min-height: 54px;
+  margin-top: 2px;
+  border: 0;
+  border-radius: 8px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
+  font-weight: 600;
+  transition:
+    box-shadow 180ms ease,
+    filter 180ms ease,
+    transform 180ms ease;
+}
+
+.login-button:hover:not(:disabled) {
+  filter: brightness(0.96);
+  transform: translateY(-1px);
+}
+
+.login-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.form-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.form-links a {
+  color: #2563eb;
+  font-size: 0.94rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+
+.form-links a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.auth-switch,
+.admin-section {
+  display: grid;
+  width: 100%;
+  justify-items: center;
+  gap: 10px;
+  color: #526f91;
+  text-align: center;
+}
+
+.auth-switch p,
+.admin-section p {
+  margin: 0;
+}
+
+.auth-switch a,
+.admin-section a {
+  display: inline-grid;
+  min-height: 42px;
+  min-width: 132px;
+  place-items: center;
+  border: 1px solid #cbd8e6;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 8px 20px rgba(31, 51, 88, 0.08);
+  color: #2563eb;
+  font-size: 0.94rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.auth-switch a:hover,
+.admin-section a:hover {
+  border-color: #2563eb;
+  color: #1d4ed8;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.14);
+  transform: translateY(-1px);
+}
+
+.admin-section {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 3;
+  width: auto;
+  justify-items: end;
+  text-align: right;
+}
+
+.section-divider {
+  width: 190px;
+  height: 1px;
+  margin: 2px 0 4px;
+  background: linear-gradient(90deg, transparent, #93c5fd, #2563eb);
+}
+
+.admin-section p {
+  color: #172033;
+  font-weight: 700;
+}
+
+.user-tab:focus-visible,
+.icon-button:focus-visible,
+.login-button:focus-visible,
+.form-links a:focus-visible,
+.auth-switch a:focus-visible,
+.admin-section a:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.25);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .login-layout {
+    width: min(100%, 440px);
+  }
+
+  .brand-panel {
+    text-align: center;
+  }
+
+  .brand-panel h1 {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .login-page {
+    align-items: start;
+    padding: 24px 14px;
+    background-image:
+      linear-gradient(rgba(239, 246, 255, 0.84), rgba(219, 234, 254, 0.82)),
+      url("../assets/login-bg-mobile.webp");
+    background-position: center top;
+  }
+
+  .login-card {
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .brand-panel h1 {
+    font-size: 2.2rem;
+  }
+
+  .card-header h2 {
+    font-size: 1.48rem;
+  }
+
+  .app-mark {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+  }
+
+  .user-tabs {
+    gap: 5px;
+  }
+
+  .user-tab {
+    min-height: 44px;
+    padding: 0 6px;
+    font-size: 0.9rem;
+  }
+
+  .input-shell {
+    min-height: 52px;
+    padding: 0 12px;
+  }
+
+  .form-links {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .auth-switch a,
+  .admin-section a {
+    width: min(100%, 220px);
+  }
+
+  .admin-section {
+    position: static;
+    width: 100%;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .section-divider {
+    width: min(100%, 260px);
+    background: linear-gradient(90deg, transparent, #93c5fd, transparent);
+  }
+}

@@ -1,0 +1,27 @@
+.admin-login-page {
+  background-image:
+    radial-gradient(circle at top left, rgba(147, 197, 253, 0.3), transparent 32%),
+    linear-gradient(rgba(239, 246, 255, 0.84), rgba(219, 234, 254, 0.82)),
+    url("../assets/login-bg-desktop.webp");
+}
+
+.admin-mark,
+.admin-button {
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+}
+
+.admin-button {
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+}
+
+.admin-button:hover:not(:disabled) {
+  filter: brightness(0.96);
+}
+
+@media (max-width: 560px) {
+  .admin-login-page {
+    background-image:
+      linear-gradient(rgba(239, 246, 255, 0.84), rgba(219, 234, 254, 0.82)),
+      url("../assets/login-bg-mobile.webp");
+  }
+}
