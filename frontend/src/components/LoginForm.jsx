@@ -3,7 +3,6 @@ import InputField from './InputField.jsx';
 import UserTypeTabs from './UserTypeTabs.jsx';
 import { EmailIcon, EyeIcon, LockIcon } from './AuthIcons.jsx';
 
-// Empty form values used when the page first loads or tabs change.
 const initialForm = {
   email: '',
   password: '',
@@ -12,27 +11,14 @@ const initialForm = {
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function LoginForm({ navigate }) {
-  // Keep the selected role in state so the same login form
-  // can be used for students, teachers and parents.
   const [selectedRole, setSelectedRole] = useState('student');
-
-  // This stores whatever the user types in the two input boxes.
   const [formData, setFormData] = useState(initialForm);
-
-  // This stores validation messages for each input.
   const [errors, setErrors] = useState({});
-
-  // This decides if the password should show as text or dots.
   const [showPassword, setShowPassword] = useState(false);
-
-  // This is used to disable the login button while login is preparing.
   const [isLoading, setIsLoading] = useState(false);
-
-  // This can show a message below the inputs.
   const [status, setStatus] = useState(null);
 
   const handleTabChange = (nextType) => {
-    // When user changes tab, clear old form data and old errors.
     setSelectedRole(nextType);
     setFormData(initialForm);
     setErrors({});
@@ -43,13 +29,11 @@ function LoginForm({ navigate }) {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
-    // Update only the input that the user is typing in.
     setFormData((currentData) => ({
       ...currentData,
       [name]: value,
     }));
 
-    // Remove the error for this field after the user starts fixing it.
     if (errors[name]) {
       setErrors((currentErrors) => ({
         ...currentErrors,
@@ -59,7 +43,6 @@ function LoginForm({ navigate }) {
   };
 
   const validateForm = () => {
-    // This object collects errors before showing them on the page.
     const nextErrors = {};
     const email = formData.email.trim();
 
@@ -77,30 +60,53 @@ function LoginForm({ navigate }) {
 
     setErrors(nextErrors);
 
-    // If there are no keys in the error object, the form is valid.
     return Object.keys(nextErrors).length === 0;
   };
 
   const handleLogin = async () => {
-    // Authentication is intentionally not implemented in this phase.
-    // TODO: Connect this form to the real authentication API later.
-    console.info('Frontend login validation passed', {
-      selectedRole,
-      email: formData.email.trim(),
-    });
+    const response = await fetch(
+      'http://127.0.0.1:8000/api/auth/login/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email.trim(),
+          password: formData.password,
+        }),
+      },
+    );
 
-    // Small delay so the loading state is visible during the UI demo.
-    await new Promise((resolve) => {
-      window.setTimeout(resolve, 500);
-    });
+    const data = await response.json();
+    console.log('LOGIN RESPONSE:', data);
+
+    if (!response.ok) {
+      throw new Error(
+        data.detail ||
+          data.message ||
+          Object.values(data).flat().join(' ') ||
+          'Invalid email or password.',
+      );
+    }
+
+    if (data.user.role !== selectedRole) {
+      throw new Error(
+        `This account is registered as ${data.user.role}, not ${selectedRole}.`,
+      );
+    }
+
+    localStorage.setItem('access_token', data.access);
+    localStorage.setItem('refresh_token', data.refresh);
+    localStorage.setItem('user', JSON.stringify(data.user));
+
+    return data;
   };
 
   const handleSubmit = async (event) => {
-    // Stop the page from refreshing when the form is submitted.
     event.preventDefault();
     setStatus(null);
 
-    // Do not continue if required fields are empty.
     if (!validateForm()) {
       return;
     }
@@ -108,12 +114,16 @@ function LoginForm({ navigate }) {
     setIsLoading(true);
 
     try {
-      // Only validate the form in Phase 1. Real login comes later.
-      await handleLogin();
-    } catch {
+      const data = await handleLogin();
+
+      setStatus({
+        type: 'success',
+        message: `Welcome, ${data.user.name || data.user.email}!`,
+      });
+    } catch (error) {
       setStatus({
         type: 'error',
-        message: 'Something went wrong while checking the form. Please try again.',
+        message: error.message,
       });
     } finally {
       setIsLoading(false);
@@ -123,7 +133,6 @@ function LoginForm({ navigate }) {
   const handleForgotPassword = (event) => {
     event.preventDefault();
 
-    // TODO: Add OTP/password recovery in the future authentication phase.
     setStatus({
       type: 'info',
       message: 'Forgot password will be added in the next authentication phase.',
@@ -189,7 +198,7 @@ function LoginForm({ navigate }) {
         )}
 
         <button type="submit" className="login-button" disabled={isLoading}>
-          {isLoading ? 'Checking...' : 'Login'}
+          {isLoading ? 'Logging in...' : 'Login'}
         </button>
       </form>
 

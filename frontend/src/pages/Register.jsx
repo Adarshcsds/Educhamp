@@ -6,6 +6,7 @@ import { EmailIcon, EyeIcon, LockIcon, UserIcon } from '../components/AuthIcons.
 const initialForm = {
   fullName: '',
   email: '',
+  phone: '',
   password: '',
   confirmPassword: '',
 };
@@ -13,7 +14,6 @@ const initialForm = {
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function Register({ navigate }) {
-  // Admin registration is intentionally excluded from the normal user flow.
   const [selectedRole, setSelectedRole] = useState('student');
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
@@ -47,6 +47,7 @@ function Register({ navigate }) {
     const nextErrors = {};
     const fullName = formData.fullName.trim();
     const email = formData.email.trim();
+    const phone = formData.phone.trim();
 
     if (!fullName) {
       nextErrors.fullName = 'Full name is required.';
@@ -56,6 +57,12 @@ function Register({ navigate }) {
       nextErrors.email = 'Email is required.';
     } else if (!emailPattern.test(email)) {
       nextErrors.email = 'Please enter a valid email address.';
+    }
+
+    if (!phone) {
+      nextErrors.phone = 'Phone number is required.';
+    } else if (!/^\d{10}$/.test(phone)) {
+      nextErrors.phone = 'Phone number must contain 10 digits.';
     }
 
     if (!formData.password.trim()) {
@@ -75,16 +82,35 @@ function Register({ navigate }) {
   };
 
   const handleRegister = async () => {
-    // TODO: Connect registration to the backend when authentication is implemented.
-    console.info('Frontend registration validation passed', {
-      selectedRole,
-      fullName: formData.fullName.trim(),
-      email: formData.email.trim(),
-    });
+    const response = await fetch(
+      'http://127.0.0.1:8000/api/auth/register/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.fullName.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          password: formData.password,
+          role: selectedRole,
+        }),
+      },
+    );
 
-    await new Promise((resolve) => {
-      window.setTimeout(resolve, 500);
-    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.detail ||
+          data.message ||
+          Object.values(data).flat().join(' ') ||
+          'Registration failed.',
+      );
+    }
+
+    return data;
   };
 
   const handleSubmit = async (event) => {
@@ -98,15 +124,18 @@ function Register({ navigate }) {
     setIsLoading(true);
 
     try {
-      await handleRegister();
+      const data = await handleRegister();
+
       setStatus({
         type: 'success',
-        message: 'Registration details look valid. Backend signup will be added later.',
+        message: data.message || 'Registration successful.',
       });
-    } catch {
+
+      setFormData(initialForm);
+    } catch (error) {
       setStatus({
         type: 'error',
-        message: 'Something went wrong while checking the form. Please try again.',
+        message: error.message,
       });
     } finally {
       setIsLoading(false);
@@ -166,6 +195,19 @@ function Register({ navigate }) {
             />
 
             <InputField
+              id="registerPhone"
+              name="phone"
+              label="Phone"
+              type="tel"
+              value={formData.phone}
+              onChange={handleInputChange}
+              placeholder="Enter your phone number"
+              icon={<UserIcon />}
+              error={errors.phone}
+              autoComplete="tel"
+            />
+
+            <InputField
               id="registerPassword"
               name="password"
               label="Password"
@@ -208,7 +250,11 @@ function Register({ navigate }) {
                   onClick={() => {
                     setShowConfirmPassword((currentValue) => !currentValue);
                   }}
-                  aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                  aria-label={
+                    showConfirmPassword
+                      ? 'Hide password'
+                      : 'Show password'
+                  }
                 >
                   <EyeIcon hidden={showConfirmPassword} />
                 </button>
@@ -222,7 +268,7 @@ function Register({ navigate }) {
             )}
 
             <button type="submit" className="login-button" disabled={isLoading}>
-              {isLoading ? 'Checking...' : 'Register'}
+              {isLoading ? 'Registering...' : 'Register'}
             </button>
           </form>
         </div>
