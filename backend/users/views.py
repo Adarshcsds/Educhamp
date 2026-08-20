@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .serializers import LoginSerializer, RegisterSerializer
 
@@ -34,13 +35,19 @@ class LoginView(APIView):
         if serializer.is_valid():
             user = serializer.validated_data["user"]
 
+            refresh = RefreshToken.for_user(user)
+
             return Response(
                 {
                     "message": "Login successful",
-                    "user_id": user.id,
-                    "name": user.name,
-                    "email": user.email,
-                    "role": user.role,
+                    "refresh": str(refresh),
+                    "access": str(refresh.access_token),
+                    "user": {
+                        "id": user.id,
+                        "name": user.name,
+                        "email": user.email,
+                        "role": user.role,
+                    },
                 },
                 status=status.HTTP_200_OK,
             )
